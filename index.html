@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BOSEA Loan Services - Loan Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="logo" href="#top" aria-label="BOSEA Loan Services">
+          <span class="logo-mark">B</span
+          ><span class="logo-text">BOSEA<small>Loan Services</small></span>
+        </a>
+        <h1 class="page-title">Personal Loan Dashboard</h1>
+        <div class="topbar-right">
+          <button
+            class="icon-btn"
+            aria-label="Notifications"
+            title="Notifications"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="22"
+              height="22"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"
+              />
+            </svg>
+            <span class="dot"></span>
+          </button>
+          <div class="profile">
+            <span class="avatar">ABEK</span
+            ><span class="profile-name">Loan Customer</span>
+          </div>
+          <button
+            class="icon-btn menu-toggle"
+            id="menuToggle"
+            aria-label="Open menu"
+            aria-expanded="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav class="nav" id="nav" aria-label="Dashboard sections">
+        <a href="#summary">Summary</a>
+        <a href="#details">Loan Details</a>
+        <a href="#calculation">Interest</a>
+        <a href="#calculator">Calculator</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#history">Repayments</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- MAIN BALANCE -->
+      <section id="summary" class="hero" aria-live="polite">
+        <p class="hero-label">CURRENT TOTAL LOAN BALANCE</p>
+        <p class="hero-amount" id="sumBalance">GHS 0.00</p>
+        <p class="hero-sub" id="sumAsOf"></p>
+        <p class="hero-sub" id="sumExcess"></p>
+        <dl class="breakdown">
+          <div>
+            <dt>Original principal</dt>
+            <dd id="bdPrincipal"></dd>
+          </div>
+          <div>
+            <dt>Initial interest</dt>
+            <dd id="bdInterest"></dd>
+          </div>
+          <div>
+            <dt>Accumulated late fees</dt>
+            <dd id="bdFees"></dd>
+          </div>
+          <div>
+            <dt>Other charges</dt>
+            <dd id="bdOther"></dd>
+          </div>
+          <div>
+            <dt>Total repayments</dt>
+            <dd id="bdRepaid"></dd>
+          </div>
+          <div class="final">
+            <dt>Final estimated balance</dt>
+            <dd id="bdFinal"></dd>
+          </div>
+        </dl>
+        <p class="hero-note">Estimated balance based on your loan terms.</p>
+      </section>
+
+      <section class="cards" aria-label="Loan summary">
+        <article class="card stat">
+          <span class="stat-icon">₵</span>
+          <p class="label">Original Principal</p>
+          <p class="figure" id="kPrincipal"></p>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">%</span>
+          <p class="label">Initial Interest</p>
+          <p class="figure" id="kInterest"></p>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">⏱</span>
+          <p class="label">Total Accumulated Late Fees</p>
+          <p class="figure" id="kFees"></p>
+          <p class="note" id="kFeesNote"></p>
+        </article>
+        <article class="card stat">
+          <span class="stat-icon">✓</span>
+          <p class="label">Total Repayments</p>
+          <p class="figure" id="kRepaid"></p>
+        </article>
+      </section>
+
+      <!-- 3. LOAN DETAILS -->
+      <section id="details" class="card">
+        <h2>My Loan Details</h2>
+        <dl class="details">
+          <div>
+            <dt>Loan Principal</dt>
+            <dd id="dPrincipal"></dd>
+          </div>
+          <div>
+            <dt>Loan Start Date</dt>
+            <dd id="dStart"></dd>
+          </div>
+          <div>
+            <dt>Initial Interest Rate</dt>
+            <dd id="dRate"></dd>
+          </div>
+          <div>
+            <dt>Loan Tenure</dt>
+            <dd id="dTenure"></dd>
+          </div>
+          <div>
+            <dt>Tenure End Date</dt>
+            <dd id="dEnd"></dd>
+          </div>
+          <div>
+            <dt>First Monthly Charge Date</dt>
+            <dd id="dFirst"></dd>
+          </div>
+          <div>
+            <dt>Monthly Post-Tenure Interest Rate</dt>
+            <dd id="dMonthlyRate"></dd>
+          </div>
+          <div>
+            <dt>Selected Calculation Date</dt>
+            <dd id="dCalc"></dd>
+          </div>
+          <div>
+            <dt>Monthly Charges Applied</dt>
+            <dd id="dCharges"></dd>
+          </div>
+          <div>
+            <dt>Currency</dt>
+            <dd>Ghana Cedis (GHS)</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- 4. CALCULATION -->
+      <section id="calculation" class="card">
+        <h2>Loan Interest Calculation</h2>
+        <div class="calc-steps">
+          <div>
+            <span>Initial Loan Interest</span><code id="cInterest"></code>
+          </div>
+          <div>
+            <span>Initial Loan Amount Including Interest</span
+            ><code id="cInitial"></code>
+          </div>
+          <div>
+            <span>Monthly Post-Tenure Interest</span><code id="cMonthly"></code>
+          </div>
+        </div>
+        <p>
+          The monthly fee is charged on the <strong>original principal</strong>,
+          not the remaining balance. It is not compounded and not prorated for
+          partial months.
+        </p>
+      </section>
+
+      <!-- 5. CALCULATOR -->
+      <section id="calculator" class="card">
+        <h2>Calculate My Loan Balance</h2>
+        <form id="calcForm" class="form-row" novalidate>
+          <label
+            >Calculation date
+            <input type="date" id="calcDate" required />
+          </label>
+          <label
+            >Additional amount already repaid (GHS)
+            <input
+              type="number"
+              id="calcRepaid"
+              min="0"
+              step="0.01"
+              value="0"
+              inputmode="decimal"
+            />
+          </label>
+          <button type="submit" class="btn">Calculate Balance</button>
+        </form>
+        <p class="error" id="calcError" role="alert"></p>
+        <p class="hint">
+          Total repaid = repayments in the history below (dated on or before the
+          calculation date) + the amount entered here.
+        </p>
+        <dl class="results" id="results"></dl>
+      </section>
+
+      <!-- 7. CHART -->
+      <section id="chart" class="card">
+        <h2>Interest Breakdown</h2>
+        <div id="bars"></div>
+      </section>
+
+      <!-- 6. TIMELINE -->
+      <section id="timeline" class="card">
+        <h2>Loan Repayment Timeline</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Principal</th>
+                <th>Interest or Fees Charged</th>
+                <th>Cumulative Fees</th>
+                <th>Total Estimated Amount Due</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="timelineBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 8. HISTORY -->
+      <section id="history" class="card">
+        <h2>Repayment History</h2>
+        <p class="hint">
+          Repayments you add here are saved on this device and deducted from
+          your balance. Adding an entry does not make or process a payment.
+        </p>
+        <form id="repayForm" class="form-row" novalidate>
+          <label
+            >Repayment date <input type="date" id="rDate" required
+          /></label>
+          <label
+            >Repayment amount (GHS)
+            <input
+              type="number"
+              id="rAmount"
+              min="0.01"
+              step="0.01"
+              required
+              inputmode="decimal"
+          /></label>
+          <label
+            >Description (optional)
+            <input
+              type="text"
+              id="rDesc"
+              maxlength="60"
+              placeholder="e.g. Mobile money transfer"
+          /></label>
+          <button type="submit" class="btn">Add Repayment</button>
+        </form>
+        <p class="error" id="repayError" role="alert"></p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <strong>BOSEA Loan Services</strong>
+      <p>
+        Balances are estimates calculated from your loan terms and the selected
+        date. The amount payable under your loan agreement may differ.
+        Repayments shown are recorded on this device only.
+      </p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
